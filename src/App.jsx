@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import './App.css' // ¡Aquí conectamos el archivo de diseño!
+import './App.css'
 
 function App() {
   const [vistaActual, setVistaActual] = useState("catalogo")
   const [busqueda, setBusqueda] = useState("")
 
   const [zapatos, setZapatos] = useState([])
-  const [archivados, setArchivados] = useState([])   //Para ver los descontinuados
+  const [archivados, setArchivados] = useState([])
   const [cargando, setCargando] = useState(true)
 
   const [modoEdicion, setModoEdicion] = useState(false)
@@ -416,7 +416,6 @@ function App() {
                       : "Guardar Producto en Inventario"}
                 </button>
 
-                {/* Solo mostramos el botón Cancelar si estamos editando */}
                 {modoEdicion && (
                   <button type="button" className="boton-secundario" onClick={cancelarEdicion}>
                     Cancelar

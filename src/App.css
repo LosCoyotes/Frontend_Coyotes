@@ -1,4 +1,3 @@
-/* Contenedor principal de la página */
 .contenedor-principal {
     padding: 40px;
     font-family: Arial, sans-serif;
@@ -6,13 +5,11 @@
     margin: 0 auto;
 }
 
-/* Título de Los Coyotes */
 .titulo-panel {
     border-bottom: 3px solid #ff6600;
     padding-bottom: 10px;
 }
 
-/* Estilos de la tabla */
 .tabla-coyotes {
     width: 100%;
     border-collapse: collapse;
@@ -40,7 +37,6 @@
     justify-content: center;
 }
 
-/* Colores condicionales para el stock */
 .stock-bajo {
     color: red;
     font-weight: bold;
@@ -51,7 +47,6 @@
     font-weight: bold;
 }
 
-/* Mensajes de texto */
 .mensaje-vacio {
     text-align: center;
     color: gray;
@@ -63,7 +58,6 @@
     font-weight: bold;
 }
 
-/* --- ESTILOS DEL FORMULARIO --- */
 .tarjeta-formulario {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
@@ -127,7 +121,6 @@
     cursor: not-allowed;
 }
 
-/* --- ESTILOS DE LOS BOTONES DE ACCIÓN --- */
 .acciones-tabla {
     display: flex;
     gap: 10px;
@@ -153,7 +146,6 @@
     cursor: not-allowed;
 }
 
-/* --- ESTILOS DE NAVEGACIÓN (PESTAÑAS) --- */
 .navegacion-panel {
     display: flex;
     gap: 15px;
@@ -183,7 +175,6 @@
     border-bottom: 3px solid #ff6600;
 }
 
-/* --- NUEVOS BOTONES --- */
 .boton-exito {
     background-color: #28a745;
     color: white;
@@ -199,7 +190,6 @@
     background-color: #218838;
 }
 
-/* Para el botón de eliminar permanentemente */
 .boton-peligro-extremo {
     background-color: #000;
     color: white;
@@ -214,7 +204,6 @@
     background-color: #333;
 }
 
-/* Para el botón de Editar */
 .boton-primario {
     background-color: #007bff;
     color: white;
@@ -230,7 +219,6 @@
     background-color: #0056b3;
 }
 
-/* Para el botón Cancelar Edición */
 .boton-secundario {
     background-color: #6c757d;
     color: white;
@@ -247,13 +235,11 @@
     background-color: #5a6268;
 }
 
-/* Grupo de botones en el formulario */
 .grupo-botones-form {
     display: flex;
     margin-top: 15px;
 }
 
-/* --- ESTILOS PARA EL BUSCADOR --- */
 .contenedor-busqueda {
     margin-bottom: 20px;
     display: flex;
@@ -275,7 +261,6 @@
     box-shadow: 0 0 5px rgba(255, 102, 0, 0.3);
 }
 
-/* Un pequeño icono/texto dentro del buscador */
 .icono-lupa {
     position: absolute;
     margin-left: 10px;
