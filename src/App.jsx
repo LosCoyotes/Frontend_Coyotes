@@ -230,7 +230,7 @@ function App() {
   //FUNCIÓN Eliminar Permanente
   const deletePermanente = async (id) => {
     if (window.confirm("ALERTA: Esta acción borrará el zapato de la base de datos para siempre. ¿Estás absolutamente seguro?")) {
-      const res = await fetch(`https://backend-coyotes.onrender.com/zapatos/${id}/permanente`, { method: "DELETE" });
+      const res = await fetch(`https://backend-coyotes.onrender.com/zapatos/eliminar/${id}/permanente`, { method: "DELETE" });
       const datos = await res.json();
       if (datos.estado === "Éxito") {
         getArchivados();
