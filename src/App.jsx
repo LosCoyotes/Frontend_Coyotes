@@ -28,7 +28,7 @@ function App() {
   // Función para obtener el catálogo
   const getCatalogo = async () => {
     try {
-      const respuesta = await fetch("https://backend-coyotes.onrender.com/zapatos", "http://127.0.0.1:8000/zapatos");
+      const respuesta = await fetch("https://backend-coyotes.onrender.com/zapatos");
       const datos = await respuesta.json();
       if (datos.estado === "Éxito") {
         setZapatos(datos.catalogo);
@@ -44,7 +44,7 @@ function App() {
   // NUEVA FUNCIÓN: Traer los archivados
   const getArchivados = async () => {
     try {
-      const res = await fetch("https://backend-coyotes.onrender.com/zapatos/archivados", "http://127.0.0.1:8000/zapatos/archivados");
+      const res = await fetch("https://backend-coyotes.onrender.com/zapatos/archivados");
       const datos = await res.json();
       if (datos.estado === "Éxito") setArchivados(datos.archivados || []);
     } catch (e) {
@@ -99,7 +99,7 @@ function App() {
     try {
       if (modoEdicion) {
         // --- RUTA DE ACTUALIZAR (PUT) ---
-        const resActualizar = await fetch(`https://backend-coyotes.onrender.com/zapatos/actualizar/${idEditando}`, `http://127.0.0.1:8000/zapatos/actualizar/${idEditando}`, {
+        const resActualizar = await fetch(`https://backend-coyotes.onrender.com/zapatos/actualizar/${idEditando}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -124,14 +124,14 @@ function App() {
 
       } else {
         // --- RUTA DE CREAR (POST) --- (Tu código original)
-        const resModelo = await fetch("https://backend-coyotes.onrender.com/modelos", "http://127.0.0.1:8000/modelos", {
+        const resModelo = await fetch("https://backend-coyotes.onrender.com/modelos", {
           method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ nombre: formulario.nombre, categoria: formulario.categoria, marca: formulario.marca })
         });
         const dataModelo = await resModelo.json();
 
         if (dataModelo.estado === "Éxito") {
-          const resVariante = await fetch("https://backend-coyotes.onrender.com/zapatos", "http://127.0.0.1:8000/zapatos", {
+          const resVariante = await fetch("https://backend-coyotes.onrender.com/zapatos", {
             method: "POST", headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               modelo_id: dataModelo.id_modelo, talla: formulario.talla, color: formulario.color,
@@ -161,7 +161,7 @@ function App() {
     if (confirmar) {
       try {
         // Hacemos el llamado a tu backend, método PUT
-        const respuesta = await fetch(`https://backend-coyotes.onrender.com/zapatos/descontinuar/${id_variante}`, `http://127.0.0.1:8000/zapatos/descontinuar/${id_variante}`, {
+        const respuesta = await fetch(`https://backend-coyotes.onrender.com/zapatos/descontinuar/${id_variante}`, {
           method: "PUT"
         });
         const datos = await respuesta.json();
@@ -180,7 +180,7 @@ function App() {
 
   const registrarVenta = async (id_variante) => {
     try {
-      const respuesta = await fetch(`https://backend-coyotes.onrender.com/zapatos/vender/${id_variante}`, `http://127.0.0.1:8000/zapatos/vender/${id_variante}`, {
+      const respuesta = await fetch(`https://backend-coyotes.onrender.com/zapatos/vender/${id_variante}`, {
         method: "PUT"
       });
       const datos = await respuesta.json();
@@ -201,7 +201,7 @@ function App() {
 
   //FUNCIÓN Reactivar
   const reactivarZapato = async (id) => {
-    await fetch(`https://backend-coyotes.onrender.com/zapatos/${id}/reactivar`, `http://127.0.0.1:8000/zapatos/${id}/reactivar`, { method: "PATCH" });
+    await fetch(`https://backend-coyotes.onrender.com/zapatos/${id}/reactivar`, { method: "PATCH" });
     getArchivados();
     getCatalogo();
     alert("¡Producto reactivado! Volverá a aparecer en el catálogo.");
@@ -210,7 +210,7 @@ function App() {
   //FUNCIÓN Eliminar Permanente
   const deletePermanente = async (id) => {
     if (window.confirm("ALERTA: Esta acción borrará el zapato de la base de datos para siempre. ¿Estás absolutamente seguro?")) {
-      const res = await fetch(`https://backend-coyotes.onrender.com/zapatos/${id}/permanente`, `http://127.0.0.1:8000/zapatos/${id}/permanente`, { method: "DELETE" });
+      const res = await fetch(`https://backend-coyotes.onrender.com/zapatos/${id}/permanente`, { method: "DELETE" });
       const datos = await res.json();
       if (datos.estado === "Éxito") {
         getArchivados();
