@@ -2,7 +2,7 @@
 .contenedor-principal {
     padding: 40px;
     font-family: Arial, sans-serif;
-    max-width: 1000px;
+    max-width: 1500px;
     margin: 0 auto;
 }
 
@@ -25,11 +25,19 @@
     color: white;
     text-align: left;
     padding: 12px;
+    text-align: center;
 }
 
 .tabla-coyotes td {
     padding: 12px;
     border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.acciones-tabla {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
 }
 
 /* Colores condicionales para el stock */
@@ -48,6 +56,11 @@
     text-align: center;
     color: gray;
     margin-top: 20px;
+}
+
+.stock-agotado {
+    color: gray;
+    font-weight: bold;
 }
 
 /* --- ESTILOS DEL FORMULARIO --- */
@@ -80,6 +93,13 @@
 }
 
 .grupo-input input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.grupo-input select {
     padding: 8px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;

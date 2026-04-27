@@ -28,7 +28,7 @@ function App() {
   // Función para obtener el catálogo
   const getCatalogo = async () => {
     try {
-      const respuesta = await fetch("http://127.0.0.1:8000/zapatos");
+      const respuesta = await fetch("https://backend-coyotes.onrender.com", "http://127.0.0.1:8000/zapatos");
       const datos = await respuesta.json();
       if (datos.estado === "Éxito") {
         setZapatos(datos.catalogo);
@@ -178,16 +178,38 @@ function App() {
     }
   }
 
+  const registrarVenta = async (id_variante) => {
+    try {
+      const respuesta = await fetch(`http://127.0.0.1:8000/zapatos/vender/${id_variante}`, {
+        method: "PUT"
+      });
+      const datos = await respuesta.json();
+      alert("Venta Exitosa.")
+
+      if (datos.estado === "Éxito") {
+        if (datos.mensaje.includes("descontinuado")) {
+          alert(datos.mensaje);
+        }
+        getCatalogo();
+      } else {
+        alert(datos.mensaje);
+      }
+    } catch (error) {
+      alert("Error al procesar la venta.");
+    }
+  }
+
   //FUNCIÓN Reactivar
   const reactivarZapato = async (id) => {
     await fetch(`http://127.0.0.1:8000/zapatos/${id}/reactivar`, { method: "PATCH" });
-    getArchivados(); // Actualizamos la lista de archivo
+    getArchivados();
+    getCatalogo();
     alert("¡Producto reactivado! Volverá a aparecer en el catálogo.");
   }
 
   //FUNCIÓN Eliminar Permanente
   const deletePermanente = async (id) => {
-    if (window.confirm("⚠️ ALERTA: Esta acción borrará el zapato de la base de datos para siempre. ¿Estás absolutamente seguro?")) {
+    if (window.confirm("ALERTA: Esta acción borrará el zapato de la base de datos para siempre. ¿Estás absolutamente seguro?")) {
       const res = await fetch(`http://127.0.0.1:8000/zapatos/${id}/permanente`, { method: "DELETE" });
       const datos = await res.json();
       if (datos.estado === "Éxito") {
@@ -204,6 +226,7 @@ function App() {
     return (
       zapato.nombre.toLowerCase().includes(termino) ||
       zapato.marca.toLowerCase().includes(termino) ||
+      zapato.categoria.toLowerCase().includes(termino) ||
       zapato.codigo.toString().includes(termino) // Buscar por ID
     );
   });
@@ -238,7 +261,7 @@ function App() {
             <input
               type="text"
               className="input-busqueda"
-              placeholder="Buscar por modelo, marca o código..."
+              placeholder="Buscar por modelo, categoria, marca o código..."
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
             />
@@ -252,12 +275,13 @@ function App() {
                 <tr>
                   <th>Código</th>
                   <th>Modelo</th>
+                  <th>Categoria</th>
                   <th>Marca</th>
                   <th>Talla</th>
                   <th>Color</th>
                   <th>Precio</th>
                   <th>Stock</th>
-                  <th></th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -265,16 +289,20 @@ function App() {
                   <tr key={zapato.codigo}>
                     <td>#{zapato.codigo}</td>
                     <td><strong>{zapato.nombre}</strong></td>
+                    <td>{zapato.categoria}</td>
                     <td>{zapato.marca}</td>
                     <td>{zapato.talla}</td>
                     <td>{zapato.color}</td>
                     <td>S/ {zapato.precio.toFixed(2)}</td>
-                    {/* Aqui ponemos una condicon para que nos indique cuando hay stock bajo */}
-                    <td className={zapato.stock < 5 ? "stock-bajo" : "stock-bien"}>
-                      {zapato.stock} unid.
+                    <td className={zapato.stock === 0 ? "stock-agotado" : zapato.stock < 5 ? "stock-bajo" : "stock-bien"}>
+                      {zapato.stock === 0 ? "AGOTADO" : `${zapato.stock} unid.`}
                     </td>
+
                     {/* Nueva celda con el botón, le pasamos el ID específico a la función */}
                     <td className="acciones-tabla">
+                      <button className="boton-exito" onClick={() => registrarVenta(zapato.codigo)} disabled={zapato.stock === 0} style={{ opacity: zapato.stock === 0 ? 0.5 : 1, cursor: zapato.stock === 0 ? "not-allowed" : "pointer" }}>
+                        Vender
+                      </button>
                       <button className="boton-primario" onClick={() => iniciarEdicion(zapato)}>
                         Editar
                       </button>
@@ -306,7 +334,14 @@ function App() {
                 </div>
                 <div className="grupo-input">
                   <label>Categoría</label>
-                  <input type="text" name="categoria" value={formulario.categoria} onChange={manejarCambio} required placeholder="Ej. Deportivo" />
+                  <select name="categoria" value={formulario.categoria} onChange={manejarCambio} required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="Zapatillas">Zapatillas</option>
+                    <option value="Zapatos casuales">Zapatos casuales</option>
+                    <option value="Sandalias">Sandalias</option>
+                    <option value="Alpargatas">Alpargatas</option>
+                    <option value="Pantuflas">Pantuflas</option>
+                  </select>
                 </div>
                 <div className="grupo-input">
                   <label>Marca</label>
@@ -361,8 +396,8 @@ function App() {
             <table className="tabla-coyotes" style={{ opacity: "0.9" }}>
               <thead>
                 <tr style={{ backgroundColor: "#666" }}>
-                  <th>Código</th><th>Modelo</th><th>Marca</th><th>Talla</th>
-                  <th>Color</th><th>Acciones de Recuperación</th>
+                  <th>Código</th><th>Modelo</th><th>Categoria</th><th>Marca</th><th>Talla</th>
+                  <th>Color</th><th>Precio</th><th>Stock</th><th>Acciones de Recuperación</th>
                 </tr>
               </thead>
               <tbody>
@@ -370,9 +405,12 @@ function App() {
                   <tr key={zapato.codigo}>
                     <td>#{zapato.codigo}</td>
                     <td><del>{zapato.nombre}</del></td>
+                    <td>{zapato.categoria}</td>
                     <td>{zapato.marca}</td>
                     <td>{zapato.talla}</td>
                     <td>{zapato.color}</td>
+                    <td>S/ {zapato.precio.toFixed(2)}</td>
+                    <td>{zapato.stock}</td>
                     <td className="acciones-tabla">
                       <button className="boton-exito" onClick={() => reactivarZapato(zapato.codigo)}>
                         Reactivar
