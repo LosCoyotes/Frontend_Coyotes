@@ -28,7 +28,7 @@ function App() {
   // Función para obtener el catálogo
   const getCatalogo = async () => {
     try {
-      const respuesta = await fetch("https://backend-coyotes.onrender.com", "http://127.0.0.1:8000/zapatos");
+      const respuesta = await fetch("https://backend-coyotes.onrender.com/zapatos", "http://127.0.0.1:8000/zapatos");
       const datos = await respuesta.json();
       if (datos.estado === "Éxito") {
         setZapatos(datos.catalogo);
