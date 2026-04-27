@@ -20,12 +20,13 @@ function App() {
     talla: "",
     color: "",
     precio: "",
-    stock: ""
+    stock: "",
+    descuento: ""
   })
 
   const [guardando, setGuardando] = useState(false)
 
-  // Función para obtener el catálogo
+  //Obtiene el catálogo
   const getCatalogo = async () => {
     try {
       const respuesta = await fetch("https://backend-coyotes.onrender.com/zapatos");
@@ -41,7 +42,7 @@ function App() {
   }
 
 
-  // NUEVA FUNCIÓN: Traer los archivados
+  //Trae los archivados
   const getArchivados = async () => {
     try {
       const res = await fetch("https://backend-coyotes.onrender.com/zapatos/archivados");
@@ -61,16 +62,15 @@ function App() {
     }
   }, [vistaActual]) // React vigila "vistaActual". Si cambia, vuelve a ejecutar esto.
 
+
   //Actualizar el formulario en tiempo real
   const manejarCambio = (e) => {
     setFormulario({ ...formulario, [e.target.name]: e.target.value })
   }
 
-  //Prepara para editar
   const iniciarEdicion = (zapato) => {
     setModoEdicion(true);
     setIdEditando(zapato.codigo);
-    // Copiamos los datos del zapato a la caja de texto
     setFormulario({
       nombre: zapato.nombre,
       categoria: zapato.categoria,
@@ -78,17 +78,37 @@ function App() {
       talla: zapato.talla,
       color: zapato.color,
       precio: zapato.precio,
+      descuento: zapato.descuento,
       stock: zapato.stock
     });
-    // Hacemos scroll hacia arriba para que el usuario vea el formulario
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
   }
 
-  // NUEVA FUNCIÓN: Cancela la edición y limpia el formulario
+  //Cancela la edición y limpia el formulario
   const cancelarEdicion = () => {
     setModoEdicion(false);
     setIdEditando(null);
-    setFormulario({ nombre: "", categoria: "", marca: "", talla: "", color: "", precio: "", stock: "" });
+    setFormulario({ nombre: "", categoria: "", marca: "", talla: "", color: "", precio: "", descuento: "", stock: "" });
+  }
+
+  //Aplica descuento al precio
+  const aplicarDescuento = () => {
+    const pct = parseFloat(formulario.descuento);
+    const precioActual = parseFloat(formulario.precio);
+
+    if (pct > 0 && precioActual > 0) {
+      const nuevoPrecio = precioActual - (precioActual * (pct / 100));
+
+      setFormulario({
+        ...formulario,
+        precio: nuevoPrecio.toFixed(2),
+        descuento: ""
+      });
+
+      alert(`¡Descuento del ${pct}% aplicado!`);
+    } else {
+      alert("Ingresa un precio base y un porcentaje de descuento válido.");
+    }
   }
 
   //Guardar ambas tablas
@@ -359,12 +379,34 @@ function App() {
                   <label>Precio (S/)</label>
                   <input type="number" step="0.01" name="precio" value={formulario.precio} onChange={manejarCambio} required placeholder="0.00" />
                 </div>
+                <div className="grupo-input" >
+                  <label>Aplicar Descuento (%)</label>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <input
+                      type="number"
+                      name="descuento"
+                      value={formulario.descuento || ""}
+                      onChange={manejarCambio}
+                      placeholder="Ej. 20"
+                      min="0"
+                      max="100"
+                    />
+                    <button
+                      type="button"
+                      onClick={aplicarDescuento}
+                      style={{ backgroundColor: '#ff6600', color: 'white', border: 'none', borderRadius: '4px', padding: '0 15px', cursor: 'pointer', fontWeight: 'bold' }}
+                    >
+                      Aplicar
+                    </button>
+                  </div>
+
+                </div>
                 <div className="grupo-input">
                   <label>Stock Inicial</label>
                   <input type="number" name="stock" value={formulario.stock} onChange={manejarCambio} required placeholder="Cantidad" />
                 </div>
               </div>
-              {/* Reemplaza tu botón <button type="submit"...> actual por este grupo: */}
+
               <div className="grupo-botones-form">
                 <button type="submit" className="boton-guardar" disabled={guardando}>
                   {guardando
