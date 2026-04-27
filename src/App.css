@@ -1,0 +1,263 @@
+/* Contenedor principal de la página */
+.contenedor-principal {
+    padding: 40px;
+    font-family: Arial, sans-serif;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Título de Los Coyotes */
+.titulo-panel {
+    border-bottom: 3px solid #ff6600;
+    padding-bottom: 10px;
+}
+
+/* Estilos de la tabla */
+.tabla-coyotes {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-coyotes th {
+    background-color: #333;
+    color: white;
+    text-align: left;
+    padding: 12px;
+}
+
+.tabla-coyotes td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Colores condicionales para el stock */
+.stock-bajo {
+    color: red;
+    font-weight: bold;
+}
+
+.stock-bien {
+    color: green;
+    font-weight: bold;
+}
+
+/* Mensajes de texto */
+.mensaje-vacio {
+    text-align: center;
+    color: gray;
+    margin-top: 20px;
+}
+
+/* --- ESTILOS DEL FORMULARIO --- */
+.tarjeta-formulario {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.cuadricula-formulario {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.grupo-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.grupo-input label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #444;
+}
+
+.grupo-input input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.boton-guardar {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.boton-guardar:hover {
+    background-color: #e65c00;
+}
+
+.boton-guardar:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* --- ESTILOS DE LOS BOTONES DE ACCIÓN --- */
+.acciones-tabla {
+    display: flex;
+    gap: 10px;
+}
+
+.boton-peligro {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.boton-peligro:hover {
+    background-color: #c82333;
+}
+
+.boton-peligro:disabled {
+    background-color: #e0a5a8;
+    cursor: not-allowed;
+}
+
+/* --- ESTILOS DE NAVEGACIÓN (PESTAÑAS) --- */
+.navegacion-panel {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.boton-pestana {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 4px 4px 0 0;
+    transition: all 0.3s;
+}
+
+.boton-pestana:hover {
+    background-color: #f0f0f0;
+}
+
+.boton-pestana.activa {
+    color: #ff6600;
+    border-bottom: 3px solid #ff6600;
+}
+
+/* --- NUEVOS BOTONES --- */
+.boton-exito {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.boton-exito:hover {
+    background-color: #218838;
+}
+
+/* Para el botón de eliminar permanentemente */
+.boton-peligro-extremo {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.boton-peligro-extremo:hover {
+    background-color: #333;
+}
+
+/* Para el botón de Editar */
+.boton-primario {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.boton-primario:hover {
+    background-color: #0056b3;
+}
+
+/* Para el botón Cancelar Edición */
+.boton-secundario {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.boton-secundario:hover {
+    background-color: #5a6268;
+}
+
+/* Grupo de botones en el formulario */
+.grupo-botones-form {
+    display: flex;
+    margin-top: 15px;
+}
+
+/* --- ESTILOS PARA EL BUSCADOR --- */
+.contenedor-busqueda {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.input-busqueda {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+}
+
+.input-busqueda:focus {
+    border-color: #ff6600;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 102, 0, 0.3);
+}
+
+/* Un pequeño icono/texto dentro del buscador */
+.icono-lupa {
+    position: absolute;
+    margin-left: 10px;
+    color: #888;
+}
